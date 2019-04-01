@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import './ui/login_screen.dart';
+import './ui/register_screen.dart';
+import './ui/list_book.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,47 +14,51 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => ListBook(),
+        "/register": (context) => RegisterScreen(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Tabbar"),
-          bottom: TabBar(
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(Icons.camera),
-                text: "Camera",
-              ),
-              Tab(
-                icon: Icon(Icons.add_alarm),
-                text: "Alarm",
-              ),
-              Tab(
-                icon: Icon(Icons.account_box),
-                text: "Box",
-              ),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            Icon(Icons.camera),
-            Icon(Icons.add_alarm),
-            Icon(Icons.account_box),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class MyHomePage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return DefaultTabController(
+//       length: 3,
+//       child: Scaffold(
+//         appBar: AppBar(
+//           title: Text("Tabbar"),
+//           bottom: TabBar(
+//             tabs: <Widget>[
+//               Tab(
+//                 icon: Icon(Icons.camera),
+//                 text: "Camera",
+//               ),
+//               Tab(
+//                 icon: Icon(Icons.add_alarm),
+//                 text: "Alarm",
+//               ),
+//               Tab(
+//                 icon: Icon(Icons.account_box),
+//                 text: "Box",
+//               ),
+//             ],
+//           ),
+//         ),
+//         body: TabBarView(
+//           children: <Widget>[
+//             Icon(Icons.camera),
+//             Icon(Icons.add_alarm),
+//             Icon(Icons.account_box),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 // class MyHomePage extends StatefulWidget {
 //   @override
