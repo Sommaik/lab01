@@ -7,10 +7,9 @@ class ListBook extends StatelessWidget {
     return Scaffold(
         body: StreamBuilder(
       stream: Firestore.instance.collection('books').snapshots(),
-      builder: (context, snapshort) {
-        if (snapshort.hasData) {
-          print(snapshort.data);
-          return buildList(snapshort.data);
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasData) {
+          return buildList(snapshot.data.documents);
         } else {
           return CircularProgressIndicator();
         }
@@ -18,13 +17,13 @@ class ListBook extends StatelessWidget {
     ));
   }
 
-  Widget buildList(List data) {
+  Widget buildList(List<DocumentSnapshot> data) {
     return ListView.builder(
       itemCount: data.length,
-      itemBuilder: (context, index) {
+      itemBuilder: (BuildContext context, int index) {
         return ListTile(
-            title: data.elementAt(index)['title'],
-            subtitle: data.elementAt(index)['author']);
+          title: Text(data.elementAt(index).data["title"]),
+        );
       },
     );
   }
