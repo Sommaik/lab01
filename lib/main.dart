@@ -1,27 +1,87 @@
 import 'package:flutter/material.dart';
-import './ui/login_screen.dart';
-import './ui/register_screen.dart';
-import './ui/list_book.dart';
+// import './ui/login_screen.dart';
+// import './ui/register_screen.dart';
+// import './ui/list_book.dart';
+// import './ui/map_screen.dart';
+import './bloc/counter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import './bloc/counter_event.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
+}
+
+class MyAppState extends State<MyApp> {
+  final CounterBloc _counterBloc = CounterBloc();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      home: BlocProvider(
+        bloc: _counterBloc,
+        child: CounterPage(),
       ),
-      initialRoute: "/",
-      routes: {
-        "/": (context) => ListBook(),
-        "/register": (context) => RegisterScreen(),
-      },
     );
   }
 }
+
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    CounterBloc _bloc = BlocProvider.of<CounterBloc>(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Bloc Counter"),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              _bloc.dispatch(CounterEvent.declease);
+            },
+            icon: Icon(Icons.remove_circle),
+          ),
+        ],
+      ),
+      body: BlocBuilder(
+        bloc: _bloc,
+        builder: (BuildContext context, int state) {
+          return Center(
+            child: Text(' $state '),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          _bloc.dispatch(CounterEvent.increase);
+        },
+      ),
+    );
+  }
+}
+
+// class MyApp extends StatelessWidget {
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Demo',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       initialRoute: "/",
+//       routes: {
+//         "/": (context) => MapScreen(),
+//         "/register": (context) => RegisterScreen(),
+//       },
+//     );
+//   }
+// }
 
 // class MyHomePage extends StatelessWidget {
 //   @override
